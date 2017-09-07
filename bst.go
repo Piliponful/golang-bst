@@ -52,14 +52,41 @@ func Lookup(node *Node, key int) bool {
 	}
 }
 
-//func Delete(node *Node, key int) *Node {
-//	if node.Key == key {
-//		return nil
-//	} else {
-//		if node.Key > key {
-//			return &Node{node.Key,node.Value,Delete(node.Left, key), node.Left }
-//		} else {
-//			return &Node{node.Key,node.Value,node.Left, Delete(node.Right, key) }
-//		}
-//	}
-//}
+func Delete(node *Node, key int) *Node {
+	if node == nil {
+		return nil
+	} else {
+		if node.Key == key {
+			if node.Left == nil && node.Right == nil {
+				return nil
+			}
+			if node.Right == nil {
+				return node.Right
+			}
+			if node.Left == nil {
+				return node.Left
+			}
+		}
+		if node.Key > key {
+			return &Node{node.Key,node.Value,Delete(node.Left, key), node.Left }
+		} else {
+			return &Node{node.Key,node.Value,node.Left, Delete(node.Right, key) }
+		}
+	}
+}
+
+func rightmost(node *Node) *Node {
+	if node.Right == nil {
+		return node
+	} else {
+		return rightmost(node.Right)
+	}
+}
+
+func deleteRightmost(node *Node) *Node {
+	if node.Right == nil {
+		return nil
+	} else {
+		return &Node{node.Key, node.Value,deleteRightmost(node.Right),node.Left}
+	}
+}

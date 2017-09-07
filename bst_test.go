@@ -18,4 +18,12 @@ func TestTree(t *testing.T) {
 	if !exist {
 		t.Fail()
 	}
+
+	// Delete function check
+	// also checks insert doesn't create duplicates
+	tree = Delete(tree,4)
+	exist = Lookup(tree, 4)
+	if exist {
+		t.Fail()
+	}
 }
